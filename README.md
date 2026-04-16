@@ -44,7 +44,7 @@ The ecosystem relies on three primary components working in tandem:
 ### Setup Steps
 1. Clone the repository:
    ```bash
-   git clone [https://github.com/yourusername/tactical-mesh-chat.git](https://github.com/yourusername/tactical-mesh-chat.git)
+   git clone https://github.com/mtepenner/tactical-mesh-chat.git
    cd tactical-mesh-chat
    ```
 2. Build and flash the firmware to your microcontroller using the provided Makefile:
