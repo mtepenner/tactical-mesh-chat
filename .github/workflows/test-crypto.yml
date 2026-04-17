@@ -1,0 +1,19 @@
+name: Test Crypto & Gateway
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test-go:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+      - name: Run Go tests
+        run: |
+          cd mesh_gateway
+          go mod tidy
+          go test ./...
