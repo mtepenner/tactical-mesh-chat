@@ -154,10 +154,9 @@ export function useMeshBluetooth(): UseMeshBluetoothReturn {
     const arr = new Uint8Array(buf);
 
     let offset = 0;
-    arr[offset++] = 0xBB; // send frame marker (not AA/55 - this goes direct to serial)
-    // The hub expects length-prefixed messages
-    view.setUint8(offset++, 0);
-    view.setUint8(offset++, totalLen);
+    arr[offset++] = 0xBB; // gateway frame marker: hub forwards this payload to the serial port
+    // The hub expects a 2-byte big-endian length prefix
+    view.setUint16(offset, totalLen, false); offset += 2;
 
     // Build packet
     view.setUint8(offset++, 1); // version

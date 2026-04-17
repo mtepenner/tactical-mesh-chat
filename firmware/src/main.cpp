@@ -115,9 +115,10 @@ void loop() {
 
     if (Serial.available() >= 3) {
         if (Serial.read() == 0xBB) {
-            uint8_t lenHigh = Serial.read();
-            uint8_t lenLow  = Serial.read();
-            uint16_t msgLen = ((uint16_t)lenHigh << 8) | lenLow;
+            int highByte = Serial.read();
+            int lowByte  = Serial.read();
+            if (highByte < 0 || lowByte < 0) return;
+            uint16_t msgLen = ((uint16_t)(uint8_t)highByte << 8) | (uint8_t)lowByte;
             if (msgLen <= 255) {
                 uint8_t buf[255];
                 size_t bytesRead = Serial.readBytes(buf, msgLen);

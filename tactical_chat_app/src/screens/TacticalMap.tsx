@@ -59,8 +59,13 @@ interface TacticalMapProps {
 }
 
 export default function TacticalMap({ host = '192.168.1.1', port = 8765 }: TacticalMapProps): React.JSX.Element {
-  const { isConnected, messages } = useMeshBluetooth();
+  const { isConnected, messages, connect, disconnect } = useMeshBluetooth();
   const [nodePositions, setNodePositions] = useState<Map<number, GPSCoord>>(new Map());
+
+  useEffect(() => {
+    connect(host, port);
+    return () => disconnect();
+  }, [host, port, connect, disconnect]);
 
   useEffect(() => {
     const gpsMessages = messages.filter((m: MeshMessage) => m.type === 'gps');
