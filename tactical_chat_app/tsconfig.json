@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "noEmit": true,
+    "jsx": "react-native",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "lib": ["ES2019"],
+    "target": "ES2019",
+    "paths": {}
+  },
+  "include": ["src/**/*", "App.tsx", "index.tsx"],
+  "exclude": ["node_modules"]
+}
