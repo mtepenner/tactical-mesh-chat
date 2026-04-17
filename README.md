@@ -36,10 +36,11 @@ The ecosystem relies on three primary components working in tandem:
 ## 💻 Installation
 
 ### Prerequisites
-* PlatformIO installed for compiling C++ firmware.
-* Go 1.18+ installed.
-* Node.js and React Native environment configured.
-* ESP32 or nRF52 development boards equipped with LoRa transceivers.
+* [PlatformIO](https://platformio.org/) installed for compiling C++ firmware.
+* [Go 1.21+](https://go.dev/dl/) installed.
+* [Node.js 18+](https://nodejs.org/) and a React Native environment configured.
+* [Python 3.8+](https://www.python.org/) (stdlib only — no extra packages needed for the simulation).
+* ESP32 or nRF52 development boards equipped with LoRa (SX1262) transceivers.
 
 ### Setup Steps
 1. Clone the repository:
@@ -47,16 +48,35 @@ The ecosystem relies on three primary components working in tandem:
    git clone https://github.com/mtepenner/tactical-mesh-chat.git
    cd tactical-mesh-chat
    ```
-2. Build and flash the firmware to your microcontroller using the provided Makefile:
+
+2. Run all tests (Go unit tests + Python mesh simulation):
    ```bash
-   make flash-firmware
+   make all
    ```
-3. Start the local Go gateway or build the mobile application:
+
+3. Build the Go gateway binary:
    ```bash
-   # In a terminal, navigate to tactical_chat_app and start the bundler
+   make build-gateway   # outputs mesh_gateway/bin/gateway
+   ```
+
+4. Flash firmware to your microcontroller (requires a connected ESP32 and PlatformIO):
+   ```bash
+   cd firmware && pio run --target upload
+   ```
+
+5. Install dependencies and type-check the React Native app:
+   ```bash
    cd tactical_chat_app
    npm install
-   npx react-native run-android # or run-ios
+   npx tsc --noEmit        # TypeScript validation
+   npx react-native run-android  # or run-ios
+   ```
+
+6. Run the standalone mesh gossip simulation:
+   ```bash
+   make test-python
+   # or directly:
+   python3 simulation/mesh_visualizer.py
    ```
 
 ## 🎮 Usage
